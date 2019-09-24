@@ -1,76 +1,82 @@
-import {
-  Form,
-  Select,
-  InputNumber,
-  DatePicker,
-  Switch,
-  Slider,
-  Button
-} from 'antd'
+import { useReducer } from "react";
+import { Row, Col, Radio } from "antd";
+import ContactList from "../components/Contact-List";
+// import Lima from "../jawaban/Lima";
 
-const FormItem = Form.Item
-const Option = Select.Option
+const text = `
+async function readDir(value){
+  // do something with value
+  return await valueChanged
+}
+`;
 
-export default () => (
-  <div style={{ marginTop: 100 }}>
-    <Form layout='horizontal'>
-      <FormItem
-        label='Input Number'
-        labelCol={{ span: 8 }}
-        wrapperCol={{ span: 8 }}
-      >
-        <InputNumber
-          size='large'
-          min={1}
-          max={10}
-          style={{ width: 100 }}
-          defaultValue={3}
-          name='inputNumber'
-        />
-        <a href='#'>Link</a>
-      </FormItem>
+function hasilReducer(state, action) {
+  const { type } = action;
+  switch (type) {
+    case 1:
+      return {
+        value: 1,
+        component: <ContactList />
+      };
+    case 2:
+      return {
+        value: 2,
+        component: (
+          <React.Fragment>
+            <p>Soal Nomor 2 Ambilah data dari</p>
+            {/* <Dua /> */}
+          </React.Fragment>
+        )
+      };
+    case 3:
+      return { value: 3, component: <h1>Belum ada Hasil</h1> };
+    case 4:
+      return { value: 4, component: <h1>Belum ada Hasil</h1> };
+    case 5:
+      return {
+        value: 5,
+        component: (
+          <React.Fragment>
+            <p>Soal Nomor 5</p>
+            {/* <Lima /> */}
+          </React.Fragment>
+        )
+      };
 
-      <FormItem label='Switch' labelCol={{ span: 8 }} wrapperCol={{ span: 8 }}>
-        <Switch defaultChecked name='switch' />
-      </FormItem>
+    default:
+      break;
+  }
+}
 
-      <FormItem label='Slider' labelCol={{ span: 8 }} wrapperCol={{ span: 8 }}>
-        <Slider defaultValue={70} />
-      </FormItem>
+export default function App() {
+  const [state, dispatch] = useReducer(hasilReducer, {
+    value: 1,
+    component: <ContactList />
+  });
 
-      First Commit
+  function handleChange(e) {
+    dispatch({ type: e.target.value });
+  }
 
-      <FormItem label='Select' labelCol={{ span: 8 }} wrapperCol={{ span: 8 }}>
-        <Select
-          size='large'
-          defaultValue='lucy'
-          style={{ width: 192 }}
-          name='select'
-        >
-          <Option value='jack'>jack</Option>
-          <Option value='lucy'>lucy</Option>
-          <Option value='disabled' disabled>
-            disabled
-          </Option>
-          <Option value='yiminghe'>yiminghe</Option>
-        </Select>
-      </FormItem>
-
-      <FormItem
-        label='DatePicker'
-        labelCol={{ span: 8 }}
-        wrapperCol={{ span: 8 }}
-      >
-        <DatePicker name='startDate' />
-      </FormItem>
-      <FormItem style={{ marginTop: 48 }} wrapperCol={{ span: 8, offset: 8 }}>
-        <Button size='large' type='primary' htmlType='submit'>
-          OK
-        </Button>
-        <Button size='large' style={{ marginLeft: 8 }}>
-          Cancel
-        </Button>
-      </FormItem>
-    </Form>
-  </div>
-)
+  return (
+    <div style={{ margin: "100px 20px" }}>
+      <Radio.Group onChange={handleChange} value={state.value}>
+        <Radio value={1} style={{ marginRight: 15 }}>
+          Contact List
+        </Radio>
+        <Radio value={2} style={{ marginRight: 15 }}>
+          Add Contact
+        </Radio>
+        <Radio value={3} style={{ marginRight: 15 }}>
+          Edit Contact
+        </Radio>
+        <Radio value={4} style={{ marginRight: 15 }}>
+          Delete Contact
+        </Radio>
+      </Radio.Group>
+      <Row>
+        <Col span={24}>{state.component}</Col>
+      </Row>
+    </div>
+  );
+}
