@@ -1,14 +1,7 @@
 import { useReducer } from "react";
 import { Row, Col, Radio } from "antd";
 import ContactList from "../components/Contact-List";
-// import Lima from "../jawaban/Lima";
-
-const text = `
-async function readDir(value){
-  // do something with value
-  return await valueChanged
-}
-`;
+import ContactAdd from "../components/Contact-Add";
 
 function hasilReducer(state, action) {
   const { type } = action;
@@ -21,12 +14,7 @@ function hasilReducer(state, action) {
     case 2:
       return {
         value: 2,
-        component: (
-          <React.Fragment>
-            <p>Soal Nomor 2 Ambilah data dari</p>
-            {/* <Dua /> */}
-          </React.Fragment>
-        )
+        component: <ContactAdd />
       };
     case 3:
       return { value: 3, component: <h1>Belum ada Hasil</h1> };
